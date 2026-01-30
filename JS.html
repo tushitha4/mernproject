@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS Assessment </title>
+</head>
+<body>
+  <h1>JS Assessment </h1>
+
+  <script>
+    // 1. Largest Number
+    function findLargestNumber(arr) {
+      if (!arr.length) return undefined;
+      return Math.max(...arr);
+    }
+
+    // 2. Palindrome
+    function isPalindrome(str) {
+      const cleaned = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+      return cleaned === cleaned.split('').reverse().join('');
+    }
+
+    // 3. Sort Array of Objects
+    function sortByKey(arr, key) {
+      return arr.sort((a, b) => {
+        if (typeof a[key] === 'string' && typeof b[key] === 'string') {
+          return a[key].localeCompare(b[key]);
+        } else {
+          return a[key] - b[key];
+        }
+      });
+    }
+
+    // 4. Pair Sum
+    function hasPairWithSum(arr, target) {
+      const seen = new Set();
+      for (let num of arr) {
+        if (seen.has(target - num)) return true;
+        seen.add(num);
+      }
+      return false;
+    }
+
+    // 5. Character Count
+    function countChars(str) {
+      const charCount = {};
+      for (let char of str.replace(/\s/g, '')) {
+        charCount[char] = (charCount[char] || 0) + 1;
+      }
+      return charCount;
+    }
+
+    // 6. Fetch API
+    async function fetchData(url) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response not ok');
+        const data = await response.json();
+        console.log("Fetch API Result:", data);
+      } catch (err) {
+        console.log("Fetch error:", err);
+      }
+    }
+
+    // 7. Random Hex Color
+    function generateRandomColor() {
+      return `#${Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0')}`;
+    }
+
+    // 8. Prime Check
+    function isPrime(num) {
+      if (num <= 1) return false;
+      for (let i = 2, sqrt = Math.sqrt(num); i <= sqrt; i++) {
+        if (num % i === 0) return false;
+      }
+      return true;
+    }
+
+    // 9. Counter using closure
+    const counter = (function() {
+      let count = 0;
+      return function() { count++; return count; };
+    })();
+
+    // 10. Email Validation
+    function validateEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+      return regex.test(email);
+    }
+
+   
+    console.log("1. Largest Number:", findLargestNumber([3, 5, -1, 0]));
+    console.log("2. Palindrome 'madam':", isPalindrome("madam"));
+    console.log("2. Palindrome 'Hello':", isPalindrome("Hello"));
+    console.log("3. Sorted by name:", sortByKey([{name:"Bob"},{name:"Alice"}], "name"));
+    console.log("4. Pair sum [1,2,3,4] target 7:", hasPairWithSum([1,2,3,4], 7));
+    console.log("4. Pair sum [1,2,3] target 10:", hasPairWithSum([1,2,3], 10));
+    console.log("5. Character count 'hello world':", countChars("hello world"));
+    fetchData("https://jsonplaceholder.typicode.com/todos/1"); // async, will log later
+    console.log("7. Random Color:", generateRandomColor());
+    console.log("8. Prime 17:", isPrime(17));
+    console.log("8. Prime 18:", isPrime(18));
+    console.log("9. Counter first call:", counter());
+    console.log("9. Counter second call:", counter());
+    console.log("10. Validate Email 'test@example.com':", validateEmail("test@example.com"));
+    console.log("10. Validate Email 'abc.com':", validateEmail("abc.com"));
+
+  </script>
+</body>
+</html>
